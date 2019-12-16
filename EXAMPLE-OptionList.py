@@ -1,14 +1,20 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-
 # The system here is an experimental one. See documentation for details.
-
-
-
-
 import npyscreen
+
+DEFAULT_CONFIG_FILE  = 'tmp/test'
+
 class TestApp(npyscreen.NPSApp):
+
+    def __init__(self, config=None):
+        super().__init__()
+        if config:
+            self.default_file = config
+        else:
+            self.default_file = DEFAULT_CONFIG_FILE
+
     def main(self):
         Options = npyscreen.OptionList()
         
@@ -17,7 +23,7 @@ class TestApp(npyscreen.NPSApp):
         
         options.append(npyscreen.OptionFreeText('FreeText', value='', documentation="This is some documentation."))
         options.append(npyscreen.OptionMultiChoice('Multichoice', choices=['Choice 1', 'Choice 2', 'Choice 3']))
-        options.append(npyscreen.OptionFilename('Filename', ))
+        options.append(npyscreen.OptionFilename('Filename', self.default_file))
         options.append(npyscreen.OptionDate('Date', ))
         options.append(npyscreen.OptionMultiFreeText('Multiline Text', value=''))
         options.append(npyscreen.OptionMultiFreeList('Multiline List'))
@@ -35,8 +41,9 @@ class TestApp(npyscreen.NPSApp):
                 max_height=None)
         
         F.edit()
-        
-        Options.write_to_file('/tmp/test')
+
+        Options.write_to_file(self.default_file)
+
 
 if __name__ == "__main__":
     App = TestApp()
