@@ -2,6 +2,9 @@
 import npyscreen
 import sqlite3
 
+# database must be populated with initial data or else this example cannot be viewed
+# todo - add record and delete record options
+# unclear what the bottom bar is for
 
 class AddressDatabase(object):
     def __init__(self, filename="example-addressbook.db"):
